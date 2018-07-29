@@ -1,0 +1,34 @@
+'Loop through stock symbols'
+
+Sub ProcessSymbols()
+  Dim LastRow As Double
+  LastRow = Cells(Rows.Count, 1).End(xlUp).Row - 1
+  Dim totalVolume As Double
+  Dim TickerRow As Integer
+  
+  Dim TickerName As String
+  
+  For Each ws In Worksheets
+  ' Create Headers for stock symbol and totalVolume'
+    TickerRow = 2
+    ws.Cells(1, 9).Value = "Ticker"
+    ws.Cells(1, 10).Value = "Total Stock Volume"
+    For i = 2 To LastRow
+     totalVolume = totalVolume + ws.Cells(i, 7).Value
+       If ws.Cells(i, 1).Value <> ws.Cells(i + 1, 1).Value Then
+         
+           ws.Cells(TickerRow, 9).Value = TickerName
+           ws.Cells(TickerRow, 10).Value = totalVolume
+           totalVolume = 0
+           TickerRow = TickerRow + 1
+      Else
+           TickerName = ws.Cells(i, 1).Value
+          
+      End If
+        
+     Next i
+   Next ws
+   
+   MsgBox ("Analisis Completed")
+
+End Sub
